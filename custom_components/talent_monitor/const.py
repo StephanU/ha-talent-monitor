@@ -3,7 +3,7 @@
 # Base component constants
 NAME = "TalentMonitor"
 MANUFACTURER = "TSUNESS Co., Ltd."
-DOMAIN = "TalentMonitor"
+DOMAIN = "talent_monitor"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 
