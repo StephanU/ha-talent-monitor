@@ -4,4 +4,3 @@ pip>=21.0,<24.1
 ruff==0.4.4
 pytest-asyncio
 pytest-homeassistant-custom-component==0.13.124
-PyTalentMonitor==0.0.1
