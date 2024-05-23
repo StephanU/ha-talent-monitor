@@ -11,8 +11,6 @@ from homeassistant.const import CONF_PASSWORD
 from homeassistant.const import CONF_USERNAME
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
-from .const import CONF_CONNECTION_TALENT_MONITOR_CLOUD
-from .const import CONF_CONNECTION_TALENT_MONITOR_CLOUD_LABEL
 from .const import DOMAIN
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
