@@ -5,6 +5,7 @@ https://github.com/stephanu/ha_talent_monitor
 """
 
 import asyncio
+import json
 import logging
 
 from custom_components.talent_monitor.coordinator import (
@@ -37,6 +38,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     coordinator = TalentMonitorDataUpdateCoordinator(hass, entry=entry)
 
     await coordinator.async_config_entry_first_refresh()
+
+    _LOGGER.debug("received data %s", json.dumps(coordinator.data))
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 

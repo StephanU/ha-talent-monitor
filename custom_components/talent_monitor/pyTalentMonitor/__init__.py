@@ -52,14 +52,14 @@ class TalentSolarMonitor:
         response_data = await response.json()
         if "token" in response_data:
             self.token = response_data["token"]
-            logging.debug("Login successful - received token: %s", self.token)
+            _LOGGER.debug("Login successful - received token: %s", self.token)
         else:
-            logging.error("Login failed. Got status code %s", response.status)
+            _LOGGER.error("Login failed. Got status code %s", response.status)
             raise AuthenticationError("Authentication failed")
 
     async def refresh_token(self):
         """Refresh the token."""
-        logging.debug("Token expired. Refreshing token...")
+        _LOGGER.debug("Token expired. Refreshing token...")
         self.login()
 
     async def get_data(self, endpoint):
@@ -76,7 +76,7 @@ class TalentSolarMonitor:
         if response.status == 200:
             return await response.json()
         else:
-            logging.error("Failed to fetch data. Status Code: %s", response.status)
+            _LOGGER.error("Failed to fetch data. Status Code: %s", response.status)
             return None
 
     async def fetch_solar_data(self):
@@ -90,11 +90,13 @@ class TalentSolarMonitor:
             status = first_station["status"]
             stationName = first_station["stationName"]
             powerStationGuid = first_station["powerStationGuid"]
-            logging.debug("GUID: %s", powerStationGuid)
+            _LOGGER.debug("GUID: %s", powerStationGuid)
 
             data = await self.get_data(
                 endpoint=f"system/station/getPowerStationByGuid?powerStationGuid={powerStationGuid}&timezone={TIMEZONE}"
             )
+            _LOGGER.debug("Data for powerstation GUID %s: %s", powerStationGuid, json.dumps(data))
+
             if data:
                 power_data = data["data"]
                 totalActivePower = power_data["totalActivePower"]
@@ -109,6 +111,8 @@ class TalentSolarMonitor:
             data = await self.get_data(
                 endpoint=f"tools/device/selectDeviceInverterInfo?deviceGuid={deviceGuid}"
             )
+
+            _LOGGER.debug("Data for inverter GUID %s: %s", deviceGuid, json.dumps(data))
             if data:
                 pv = data["data"]["pv"]
                 pv1Voltage = pv[0]["voltage"]
