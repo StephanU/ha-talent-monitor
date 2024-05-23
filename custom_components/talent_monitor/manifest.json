@@ -12,8 +12,6 @@
   "loggers": [
     "PyTalentMonitor"
   ],
-  "requirements": [
-    "PyTalentMonitor==0.0.1"
-  ],
+  "requirements": [],
   "version": "0.0.1"
 }
