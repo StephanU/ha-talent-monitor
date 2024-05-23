@@ -1,5 +1,5 @@
 {
-  "domain": "TalentMonitor",
+  "domain": "talent_monitor",
   "name": "TalentMonitor",
   "codeowners": [
     "@stephanu"
