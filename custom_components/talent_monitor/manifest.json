@@ -1,0 +1,19 @@
+{
+  "domain": "TalentMonitor",
+  "name": "TalentMonitor",
+  "codeowners": [
+    "@stephanu"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/stephanu/ha-talent-monitor",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/stephanu/ha-talent-monitor/issues",
+  "loggers": [
+    "PyTalentMonitor"
+  ],
+  "requirements": [
+    "PyTalentMonitor==0.0.1"
+  ],
+  "version": "0.0.1"
+}

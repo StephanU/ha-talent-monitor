@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "connection_talent_monitor_cloud": {
+        "description": "Please enter the following credentials to connect to the Talent Monitoring API.",
+        "data": {
+          "username": "Username",
+          "password": "Password"
+        },
+        "data_description": {
+          "username": "Your user name.",
+          "password": "Your password."
+        }
+      }
+    },
+    "error": {
+      "auth_cloud": "Username/Password is wrong. Please see the logs for details."
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance is allowed."
+    }
+  }
+}

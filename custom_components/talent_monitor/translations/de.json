@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "connection_talent_monitor_cloud": {
+        "description": "Bitte gib die folgenden Anmeldedaten ein, um eine Verbindung mit der Talent Monitoring API herzustellen.",
+        "data": {
+          "username": "Benutzername",
+          "password": "Passwort"
+        },
+        "data_description": {
+          "username": "Dein Benutzername.",
+          "password": "Dein Passowrd"
+        }
+      }
+    },
+    "error": {
+      "auth_cloud": "Benutzername oder Passwort sind falsch. Details findest du in den Protokollen."
+    },
+    "abort": {
+      "single_instance_allowed": "Es ist nur eine einzige Instanz zulässig."
+    }
+  }
+}
