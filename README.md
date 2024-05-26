@@ -24,10 +24,11 @@ TALENT Monitoring and Management Portal (TSUN) integration for HomeAssistant usi
 
 ### Via HACS
 
-1. Install [HACS](https://hacs.xyz/docs/setup/:requisites)
+1. Install [HACS](https://hacs.xyz/docs/setup/prerequisites/)
 2. Add 'https://github.com/StephanU/ha-talent-monitor' as a [Custom Repository](https://hacs.xyz/docs/faq/custom_repositories)
 3. Restart Home Assistant
-4. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "TalentMonitor"
+4. In the HA UI, go to "Settings" -> "Automations & scenes". Click "+ Add Integration" and search for "TalentMonitor"
+5. Enter the username and password that you used to register your solar plant in the Talent Monitoring App
 
 ### Manually
 
@@ -37,8 +38,8 @@ TALENT Monitoring and Management Portal (TSUN) integration for HomeAssistant usi
 4. Download _all_ the files from the `custom_components/talent-monitor/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
-7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "TalentMonitor"
-
+7. In the HA UI, go to "Settings" -> "Automations & scenes". Click "+ Add Integration" and search for "TalentMonitor"
+8. Enter the username and password that you used to register your solar plant in the Talent Monitoring App
 
 ## Configuration
 
