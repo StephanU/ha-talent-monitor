@@ -52,7 +52,7 @@ class TalentMonitorDataUpdateCoordinator(DataUpdateCoordinator):
         """Update data via library."""
         _LOGGER.debug("_async_update_data ")
         try:
-            return await self.api.fetch_solar_data()
+            return await self.api.fetch_data()
         except Exception as exception:
             _LOGGER.exception("_async_update_data failed")
             raise UpdateFailed() from exception

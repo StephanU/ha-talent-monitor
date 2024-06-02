@@ -13,7 +13,7 @@ ISSUE_URL = "https://github.com/stephanu/ha-talent-monitor/issues"
 
 # Platforms
 SENSOR = "sensor"
-PLATFORMS = []
+PLATFORMS = [SENSOR]
 
 
 # Configuration and options
