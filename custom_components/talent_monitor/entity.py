@@ -17,7 +17,7 @@ class TalentMonitorEntity(CoordinatorEntity):
     _attr_has_entity_name = True
 
     def __init__(
-        self, coordinator, entity: Entity
+        self, coordinator, entity: Entity, entity_suffix: str = ""
     ):
         """Initialize a TalentMonitor entity."""
         super().__init__(coordinator)
@@ -25,7 +25,7 @@ class TalentMonitorEntity(CoordinatorEntity):
         device_id = f"{entity.entity_id}"
         device_name = entity.name
 
-        self._attr_unique_id = f"{device_id}"
+        self._attr_unique_id = f"{device_id}{entity_suffix}"
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},

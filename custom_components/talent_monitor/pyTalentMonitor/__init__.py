@@ -2,7 +2,6 @@
 
 import argparse
 import asyncio
-import json
 import logging
 
 from aiohttp import ClientSession
@@ -12,13 +11,6 @@ from custom_components.talent_monitor.pyTalentMonitor.power_station import Power
 
 # Configure logging
 _LOGGER: logging.Logger = logging.getLogger(__name__)
-
-BASE_URL = "https://www.talent-monitoring.com/prod-api"
-TIMEZONE = "+02:00"
-
-class AuthenticationError(Exception):
-    """AuthenticationError when connecting to the Talent API."""
-    pass
 
 class TalentSolarMonitor:
     """TalentSolarMonitor API client."""
@@ -38,12 +30,15 @@ class TalentSolarMonitor:
     def get_power_stations(self) -> list[PowerStation]:
         return self._power_station_data_provider.power_stations
 
-    def fetch_data(self):
-        self._inverter_data_provider.fetch_data()
-        self._power_station_data_provider.fetch_data()
+    async def fetch_data(self):
+        await self._inverter_data_provider.fetch_data()
+        await self._power_station_data_provider.fetch_data()
 
     async def fetch_solar_data(self):
         await self.fetch_data()
+
+    async def login(self):
+        await self._data_provider.login()
 
 async def main(username: str, password: str):
     """Connect to the TalentSolarMonitor API and fetch the solar data."""

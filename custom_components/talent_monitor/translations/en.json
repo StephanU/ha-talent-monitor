@@ -19,5 +19,24 @@
     "abort": {
       "single_instance_allowed": "Only a single instance is allowed."
     }
+  },
+  "entity": {
+    "sensor": {
+      "talentmonitor_powerstation_totalActivePower": {
+        "name": "Current Power"
+      },
+      "talentmonitor_powerstation_dayEnergy": {
+        "name": "Total Energy Today"
+      },
+      "talentmonitor_powerstation_monthEnergy": {
+        "name": "Total Energy This Month"
+      },
+      "talentmonitor_powerstation_yearEnergy": {
+        "name": "Total Energy This Year"
+      },
+      "talentmonitor_powerstation_lastDataUpdateTime": {
+        "name": "Last Data Update"
+      }
+    }
   }
 }

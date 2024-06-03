@@ -2,7 +2,6 @@ import logging
 import os
 
 from aiohttp import ClientSession
-from custom_components.talent_monitor.pyTalentMonitor import AuthenticationError
 
 # Configure logging
 _LOGGER: logging.Logger = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ class DataProvider():
     async def login(self):
         """Log in using the given credentials."""
         login_data = {"username": self._username, "password": self._password}
-        response = await self.session.post(f"{self._url}/login", json=login_data)
+        response = await self._session.post(f"{self._url}/login", json=login_data)
         response_data = await response.json()
         if "token" in response_data:
             self._token = response_data["token"]
@@ -48,13 +47,13 @@ class DataProvider():
     async def get_data(self, endpoint):
         """Get data from the given endpoint."""
         if not self._token:
-            self.login()
+            await self.login()
         headers = {"Authorization": f"Bearer {self._token}"}
-        response = await self.session.get(f"{self._url}/{endpoint}", headers=headers)
+        response = await self._session.get(f"{self._url}/{endpoint}", headers=headers)
         if response.status == 401:  # Unauthorized, token might be expired
             self.refresh_token()
             headers["Authorization"] = f"Bearer {self._token}"
-            response = await self.session.get(f"{self._url}/{endpoint}", headers=headers)
+            response = await self._session.get(f"{self._url}/{endpoint}", headers=headers)
 
         if response.status == 200:
             return await response.json()
@@ -68,3 +67,7 @@ class Entity:
     def __init__(self, entity_id: str, name: str) -> None:
         self.entity_id = entity_id
         self.name = name
+
+class AuthenticationError(Exception):
+    """AuthenticationError when connecting to the Talent API."""
+    pass

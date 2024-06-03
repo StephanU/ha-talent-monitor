@@ -15,15 +15,15 @@ class PowerStation(Entity):
         self, entity_id: str, name: str
     ) -> None:
         super().__init__(entity_id, name)
-        self._data
-
-    @property
-    def data(self, data):
-        self._data = data
+        self._data = {}
 
     @property
     def data(self):
         return self._data
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
 
 class PowerStationDataProvider():
@@ -50,15 +50,17 @@ class PowerStationDataProvider():
                     powerStationGuid = power_station_data["powerStationGuid"]
                     powerStationName = power_station_data["stationName"]
 
+                    _LOGGER.debug("Data for powerstation GUID %s: %s", powerStationGuid, json.dumps(power_station_data))
+
                     if not powerStationGuid in self._power_stations:
                         self._power_stations["powerStationGuid"] = PowerStation(powerStationGuid, powerStationName)
 
-                    power_station = self._power_stations["deviceGuid"]
+                    power_station = self._power_stations["powerStationGuid"]
 
                     power_station_info = await self._data_provider.get_data(
                         endpoint=f"system/station/getPowerStationByGuid?powerStationGuid={powerStationGuid}&timezone={TIMEZONE}"
                     )
 
-                    _LOGGER.debug("Data for powerstation GUID %s: %s", powerStationGuid, json.dumps(data))
-                    if power_station_info:
-                        power_station.data = power_station_info
+                    _LOGGER.debug("Details for powerstation GUID %s: %s", powerStationGuid, json.dumps(power_station_info))
+                    if power_station_info and "data" in power_station_info:
+                        power_station.data = power_station_info["data"]

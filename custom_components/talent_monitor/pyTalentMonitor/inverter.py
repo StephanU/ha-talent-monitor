@@ -13,15 +13,15 @@ class Inverter(Entity):
         self, entity_id: str, name: str
     ) -> None:
         super().__init__(entity_id, name)
-        self._data
-
-    @property
-    def data(self, data):
-        self._data = data
+        self._data = {}
 
     @property
     def data(self):
         return self._data
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
 
 class InverterDataProvider():
@@ -47,6 +47,8 @@ class InverterDataProvider():
                 if "deviceGuid" in inverter_data:
                     deviceGuid = inverter_data["deviceGuid"]
 
+                    _LOGGER.debug("Data for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_data))
+
                     if not deviceGuid in self._inverters:
                         self._inverters["deviceGuid"] = Inverter()
 
@@ -56,6 +58,6 @@ class InverterDataProvider():
                         endpoint=f"tools/device/selectDeviceInverterInfo?deviceGuid={deviceGuid}"
                     )
 
-                    _LOGGER.debug("Data for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_info))
-                    if inverter_info:
-                        inverter.data = inverter_info
+                    _LOGGER.debug("Details for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_info))
+                    if inverter_info and "data" in inverter_info:
+                        inverter.data = inverter_info["data"]

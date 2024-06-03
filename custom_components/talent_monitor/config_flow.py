@@ -2,7 +2,8 @@
 
 import logging
 
-from custom_components.talent_monitor.pyTalentMonitor import AuthenticationError, TalentSolarMonitor
+from custom_components.talent_monitor.pyTalentMonitor import  TalentSolarMonitor
+from custom_components.talent_monitor.pyTalentMonitor.data_provider import AuthenticationError
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from aiohttp import ClientConnectorError
