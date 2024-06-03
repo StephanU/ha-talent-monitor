@@ -5,7 +5,6 @@ https://github.com/stephanu/ha_talent_monitor
 """
 
 import asyncio
-import json
 import logging
 
 from custom_components.talent_monitor.coordinator import (

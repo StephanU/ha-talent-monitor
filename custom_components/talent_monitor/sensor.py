@@ -63,7 +63,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     coordinator = hass.data[DOMAIN][entry.entry_id]
     power_stations: list[PowerStation] = coordinator.api.get_power_stations()
     for power_station in power_stations:
-        for index, value in enumerate(power_station.data):
+        for _, value in enumerate(power_station.data):
             _LOGGER.debug("Iterate data for powerstation %s", value)
             if value and value in SENSORS:
                 async_add_devices(

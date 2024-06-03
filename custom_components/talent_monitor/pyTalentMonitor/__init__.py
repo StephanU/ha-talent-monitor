@@ -28,16 +28,20 @@ class TalentSolarMonitor:
 
 
     def get_power_stations(self) -> list[PowerStation]:
+        """Return the power stations."""
         return self._power_station_data_provider.power_stations
 
     async def fetch_data(self):
+        """Fetch data from the TalentMonitor."""
         await self._inverter_data_provider.fetch_data()
         await self._power_station_data_provider.fetch_data()
 
     async def fetch_solar_data(self):
+        """Fetch the solar data and return it as json."""
         await self.fetch_data()
 
     async def login(self):
+        """Log in to the TalentMonitor API."""
         await self._data_provider.login()
 
 async def main(username: str, password: str):

@@ -1,3 +1,4 @@
+"""Data Provider for accessing the TalentMonitor API."""
 import logging
 import os
 
@@ -8,12 +9,13 @@ _LOGGER: logging.Logger = logging.getLogger(__name__)
 
 BASE_URL = "https://www.talent-monitoring.com/prod-api"
 
-class DataProvider():
-    """Data provider accessing the MyGekko API"""
+class DataProvider:
+    """Data provider accessing the TalentMonitor API."""
 
     def __init__(
         self,  username: str, password: str, session: ClientSession
     ):
+        """Initialize the data provider."""
         self._url = BASE_URL
         self._username = username or os.environ.get("PYTALENT_USERNAME")
         self._password = password or os.environ.get("PYTALENT_PASSWORD")
@@ -62,12 +64,14 @@ class DataProvider():
             return None
 
 class Entity:
-    """Base class for TalentMonitor entities"""
+    """Base class for TalentMonitor entities."""
 
     def __init__(self, entity_id: str, name: str) -> None:
+        """Initialize the entity."""
         self.entity_id = entity_id
         self.name = name
 
 class AuthenticationError(Exception):
     """AuthenticationError when connecting to the Talent API."""
+
     pass
