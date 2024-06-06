@@ -55,11 +55,11 @@ class TalentMonitorInverterEntity(CoordinatorEntity):
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
-            manufacturer=inverter.data["nameOfManufacturer"] if "nameOfManufacturer" in inverter.data else NAME,
+            manufacturer=inverter.data.get("nameOfManufacturer", NAME),
             name=device_name,
-            serial_number=inverter.data["serialNumber"] if "serialNumber" in inverter.data else None,
-            sw_version=inverter.data["firmwareVersion1"] if "firmwareVersion1" in inverter.data else None,
-            model=inverter.data["model"] if "model" in inverter.data else None,
+            serial_number=inverter.data.get("serialNumber", None),
+            sw_version=inverter.data.get("firmwareVersion1", None),
+            model=inverter.data.get("model", None),
         )
 
         _LOGGER.debug("Added TalentMonitor entity id='%s'", self.unique_id)
