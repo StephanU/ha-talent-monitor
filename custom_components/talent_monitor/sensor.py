@@ -53,6 +53,12 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATE,
     ),
+    SensorEntityDescription(
+        key="inverterTemp",
+        translation_key="talentmonitor_inverter_temp",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TEMPERATURE,
+    ),
 )
 
 SENSORS = {desc.key: desc for desc in SENSOR_TYPES}
@@ -169,10 +175,13 @@ class TalentMonitorInverterSensor(TalentMonitorInverterEntity, SensorEntity):
     @property
     def native_unit_of_measurement(self) -> str | None:
         """Return the unit of measurement."""
+        _LOGGER.debug('native_unit_of_measurement for %s', self.entity_description.key)
         key_for_value_with_unit = self.entity_description.key + "Named"
 
         if (key_for_value_with_unit in self._inverter.data and self._inverter.data[key_for_value_with_unit]):
             value_split = self._inverter.data[key_for_value_with_unit].split(" ")
+
+            _LOGGER.debug('native_unit_of_measurement for %s', self._inverter.data[key_for_value_with_unit])
             if (value_split and len(value_split) == 2):
                 unit = value_split[1]
                 return SENSOR_UNIT_MAPPING[unit]

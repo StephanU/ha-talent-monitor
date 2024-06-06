@@ -39,6 +39,9 @@
       },
       "talentmonitor_powerstation_rated_power": {
         "name": "Nennleistung"
+      },
+      "talentmonitor_inverter_temp": {
+        "name": "Temperatur"
       }
     }
   }
