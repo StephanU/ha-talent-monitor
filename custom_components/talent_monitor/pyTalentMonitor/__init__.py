@@ -5,7 +5,7 @@ import asyncio
 import logging
 
 from aiohttp import ClientSession
-from custom_components.talent_monitor.pyTalentMonitor.inverter import InverterDataProvider
+from custom_components.talent_monitor.pyTalentMonitor.inverter import Inverter, InverterDataProvider
 from custom_components.talent_monitor.pyTalentMonitor.data_provider import DataProvider
 from custom_components.talent_monitor.pyTalentMonitor.power_station import PowerStation, PowerStationDataProvider
 
@@ -30,6 +30,11 @@ class TalentSolarMonitor:
     def get_power_stations(self) -> list[PowerStation]:
         """Return the power stations."""
         return self._power_station_data_provider.power_stations
+
+    def get_inverters(self) -> list[Inverter]:
+        """Return the inverters."""
+        return self._inverter_data_provider.inverters
+
 
     async def fetch_data(self):
         """Fetch data from the TalentMonitor."""

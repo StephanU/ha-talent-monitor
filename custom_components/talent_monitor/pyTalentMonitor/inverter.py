@@ -37,13 +37,13 @@ class InverterDataProvider:
     ) -> None:
         """Initialize the data provider."""
         self._data_provider = data_provider
-        self._inverter = {}
+        self._inverters = {}
 
     @property
     def inverters(self) -> list[Inverter]:
         """Returns the inverters read from TalentMonitor."""
         result: list[Inverter] = []
-        for data in self._inverter.values():
+        for data in self._inverters.values():
             result.append(data)
 
         return result
@@ -52,14 +52,15 @@ class InverterDataProvider:
         """Fetch the data of the inverter."""
         data = await self._data_provider.get_data(endpoint="tools/device/selectDeviceInverter")
         if data and "rows" in data:
-            for inverter_data in data["rows"]:
+            for index, inverter_data in enumerate(data["rows"], start=1):
                 if "deviceGuid" in inverter_data:
                     deviceGuid = inverter_data["deviceGuid"]
+                    inverter_name = "Inverter" #TODO get a better name from inverter_data
 
                     _LOGGER.debug("Data for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_data))
 
                     if deviceGuid not in self._inverters:
-                        self._inverters["deviceGuid"] = Inverter()
+                        self._inverters["deviceGuid"] = Inverter(deviceGuid, inverter_name + " " + str(index))
 
                     inverter = self._inverters["deviceGuid"]
 

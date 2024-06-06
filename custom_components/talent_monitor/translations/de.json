@@ -22,20 +22,23 @@
   },
   "entity": {
     "sensor": {
-      "talentmonitor_powerstation_totalActivePower": {
+      "talentmonitor_powerstation_total_active_power": {
         "name": "Aktuelle Leistung"
       },
-      "talentmonitor_powerstation_dayEnergy": {
+      "talentmonitor_powerstation_day_energy": {
         "name": "Energie insgesamt (heute)"
       },
-      "talentmonitor_powerstation_monthEnergy": {
+      "talentmonitor_powerstation_month_energy": {
         "name": "Energie insgesamt (dieser Monat)"
       },
-      "talentmonitor_powerstation_yearEnergy": {
+      "talentmonitor_powerstation_year_energy": {
         "name": "Energie insgesamt (dieses Jahr)"
       },
-      "talentmonitor_powerstation_lastDataUpdateTime": {
+      "talentmonitor_powerstation_last_data_update_time": {
         "name": "Letzte Datenaktualisierung"
+      },
+      "talentmonitor_powerstation_rated_power": {
+        "name": "Nennleistung"
       }
     }
   }
