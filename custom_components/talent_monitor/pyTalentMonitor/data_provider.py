@@ -70,6 +70,17 @@ class Entity:
         """Initialize the entity."""
         self.entity_id = entity_id
         self.name = name
+        self._data = {}
+
+    @property
+    def data(self):
+        """Return the data of the entity."""
+        return self._data
+
+    @data.setter
+    def data(self, data):
+        """Set the data of the entity."""
+        self._data = data
 
 class AuthenticationError(Exception):
     """AuthenticationError when connecting to the Talent API."""

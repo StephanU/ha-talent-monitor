@@ -22,7 +22,7 @@ class TalentMonitorEntity(CoordinatorEntity):
         self, coordinator, entity: Entity, entity_suffix: str = ""
     ):
         """Initialize a TalentMonitor entity."""
-        super().__init__(coordinator)
+        CoordinatorEntity.__init__(self,coordinator)
 
         device_id = f"{entity.entity_id}"
         device_name = entity.name

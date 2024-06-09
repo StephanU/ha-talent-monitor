@@ -2,6 +2,7 @@
 from datetime import datetime
 import logging
 from custom_components.talent_monitor.entity import TalentMonitorEntity, TalentMonitorInverterEntity
+from custom_components.talent_monitor.pyTalentMonitor.data_provider import Entity
 from custom_components.talent_monitor.pyTalentMonitor.inverter import Inverter
 from custom_components.talent_monitor.pyTalentMonitor.power_station import PowerStation
 from homeassistant.components.sensor import SensorDeviceClass
@@ -104,7 +105,50 @@ async def async_setup_entry(hass, entry, async_add_devices):
                     ]
                 )
 
-class TalentMonitorPowerStationSensor(TalentMonitorEntity, SensorEntity):
+
+class TalentMonitorSensor(SensorEntity):
+    """TalentMonitor Sensor class."""
+
+    def __init__(
+        self,
+        entity: Entity,
+    ):
+        """Initialize a TalentMonitor sensor."""
+        self._entity = entity
+
+    @property
+    def native_value(self):
+        """Return the state of the sensor."""
+        if (self.entity_description.key == "lastDataUpdateTime"):
+            return datetime.fromisoformat(self._entity.data[self.entity_description.key])
+        else:
+            key_for_value_with_unit = self.entity_description.key + "Named"
+
+            if (key_for_value_with_unit in self._entity.data and self._entity.data[key_for_value_with_unit]):
+                value_split = self._entity.data[key_for_value_with_unit].split(" ")
+
+                if (value_split and len(value_split) == 2):
+                    value = value_split[0]
+                    return value
+                else:
+                    return self._entity.data[self.entity_description.key]
+            else:
+                return self._entity.data[self.entity_description.key]
+
+    @property
+    def native_unit_of_measurement(self) -> str | None:
+        """Return the unit of measurement."""
+        key_for_value_with_unit = self.entity_description.key + "Named"
+
+        if (key_for_value_with_unit in self._entity.data and self._entity.data[key_for_value_with_unit]):
+            value_split = self._entity.data[key_for_value_with_unit].split(" ")
+            if (value_split and len(value_split) == 2):
+                unit = value_split[1]
+                return SENSOR_UNIT_MAPPING[unit]
+
+        return None
+
+class TalentMonitorPowerStationSensor(TalentMonitorEntity, TalentMonitorSensor):
     """TalentMonitor PowerStation Sensor class."""
 
     def __init__(
@@ -114,38 +158,17 @@ class TalentMonitorPowerStationSensor(TalentMonitorEntity, SensorEntity):
         sensorEntityDescription: SensorEntityDescription,
     ):
         """Initialize a TalentMonitor PowerStation sensor."""
-        super().__init__(
+        TalentMonitorEntity.__init__(self,
             coordinator,
             power_station,
             sensorEntityDescription.key
         )
+        TalentMonitorSensor.__init__(self,power_station)
 
-        self._power_station = power_station
         self.entity_description = sensorEntityDescription
 
-    @property
-    def native_value(self):
-        """Return the state of the sensor."""
-        if (self.entity_description.key == "lastDataUpdateTime"):
-            return datetime.fromisoformat(self._power_station.data[self.entity_description.key])
-        else:
-            return self._power_station.data[self.entity_description.key]
 
-    @property
-    def native_unit_of_measurement(self) -> str | None:
-        """Return the unit of measurement."""
-        key_for_value_with_unit = self.entity_description.key + "Named"
-
-        if (key_for_value_with_unit in self._power_station.data and self._power_station.data[key_for_value_with_unit]):
-            value_split = self._power_station.data[key_for_value_with_unit].split(" ")
-            if (value_split and len(value_split) == 2):
-                unit = value_split[1]
-                return SENSOR_UNIT_MAPPING[unit]
-
-        return None
-
-
-class TalentMonitorInverterSensor(TalentMonitorInverterEntity, SensorEntity):
+class TalentMonitorInverterSensor(TalentMonitorInverterEntity, TalentMonitorSensor):
     """TalentMonitor Inverter Sensor class."""
 
     def __init__(
@@ -155,36 +178,13 @@ class TalentMonitorInverterSensor(TalentMonitorInverterEntity, SensorEntity):
         sensorEntityDescription: SensorEntityDescription,
     ):
         """Initialize a TalentMonitor Inverter sensor."""
-        super().__init__(
+        TalentMonitorInverterEntity.__init__(self,
             coordinator,
             inverter,
             sensorEntityDescription.key
         )
+        TalentMonitorSensor.__init__(self, inverter)
 
-        self._inverter = inverter
         self.entity_description = sensorEntityDescription
 
-    @property
-    def native_value(self):
-        """Return the state of the sensor."""
-        if (self.entity_description.key == "lastDataUpdateTime"):
-            return datetime.fromisoformat(self._inverter.data[self.entity_description.key])
-        else:
-            return self._inverter.data[self.entity_description.key]
-
-    @property
-    def native_unit_of_measurement(self) -> str | None:
-        """Return the unit of measurement."""
-        _LOGGER.debug('native_unit_of_measurement for %s', self.entity_description.key)
-        key_for_value_with_unit = self.entity_description.key + "Named"
-
-        if (key_for_value_with_unit in self._inverter.data and self._inverter.data[key_for_value_with_unit]):
-            value_split = self._inverter.data[key_for_value_with_unit].split(" ")
-
-            _LOGGER.debug('native_unit_of_measurement for %s', self._inverter.data[key_for_value_with_unit])
-            if (value_split and len(value_split) == 2):
-                unit = value_split[1]
-                return SENSOR_UNIT_MAPPING[unit]
-
-        return None
 
