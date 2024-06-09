@@ -16,17 +16,6 @@ class Inverter(Entity):
     ) -> None:
         """Initialize the inverter."""
         super().__init__(entity_id, name)
-        self._data = {}
-
-    @property
-    def data(self):
-        """Return the data of the inverter."""
-        return self._data
-
-    @data.setter
-    def data(self, data):
-        """Set the data of the inverter."""
-        self._data = data
 
 
 class InverterDataProvider:
