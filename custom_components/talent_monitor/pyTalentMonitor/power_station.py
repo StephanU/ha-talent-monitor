@@ -45,20 +45,20 @@ class PowerStationDataProvider:
         if data and "rows" in data:
             for power_station_data in data["rows"]:
                 if "powerStationGuid" in power_station_data:
-                    powerStationGuid = power_station_data["powerStationGuid"]
-                    powerStationName = power_station_data["stationName"]
+                    power_station_guid = power_station_data["powerStationGuid"]
+                    power_station_name = power_station_data["stationName"]
 
-                    _LOGGER.debug("Data for powerstation GUID %s: %s", powerStationGuid, json.dumps(power_station_data))
+                    _LOGGER.debug("Data for powerstation GUID %s: %s", power_station_guid, json.dumps(power_station_data))
 
-                    if powerStationGuid not in self._power_stations:
-                        self._power_stations["powerStationGuid"] = PowerStation(powerStationGuid, powerStationName)
+                    if power_station_guid not in self._power_stations:
+                        self._power_stations[power_station_guid] = PowerStation(power_station_guid, power_station_name)
 
-                    power_station = self._power_stations["powerStationGuid"]
+                    power_station = self._power_stations[power_station_guid]
 
                     power_station_info = await self._data_provider.get_data(
-                        endpoint=f"system/station/getPowerStationByGuid?powerStationGuid={powerStationGuid}&timezone={TIMEZONE}"
+                        endpoint=f"system/station/getPowerStationByGuid?powerStationGuid={power_station_guid}&timezone={TIMEZONE}"
                     )
 
-                    _LOGGER.debug("Details for powerstation GUID %s: %s", powerStationGuid, json.dumps(power_station_info))
+                    _LOGGER.debug("Details for powerstation GUID %s: %s", power_station_guid, json.dumps(power_station_info))
                     if power_station_info and "data" in power_station_info:
                         power_station.data = power_station_info["data"]
