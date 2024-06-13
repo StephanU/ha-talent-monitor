@@ -43,20 +43,20 @@ class InverterDataProvider:
         if data and "rows" in data:
             for index, inverter_data in enumerate(data["rows"], start=1):
                 if "deviceGuid" in inverter_data:
-                    deviceGuid = inverter_data["deviceGuid"]
+                    device_guid = inverter_data["deviceGuid"]
                     inverter_name = "Inverter" #TODO get a better name from inverter_data
 
-                    _LOGGER.debug("Data for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_data))
+                    _LOGGER.debug("Data for inverter GUID %s: %s", device_guid, json.dumps(inverter_data))
 
-                    if deviceGuid not in self._inverters:
-                        self._inverters["deviceGuid"] = Inverter(deviceGuid, inverter_name + " " + str(index))
+                    if device_guid not in self._inverters:
+                        self._inverters[device_guid] = Inverter(device_guid, inverter_name + " " + str(index))
 
-                    inverter = self._inverters["deviceGuid"]
+                    inverter = self._inverters[device_guid]
 
                     inverter_info = await self._data_provider.get_data(
-                        endpoint=f"tools/device/selectDeviceInverterInfo?deviceGuid={deviceGuid}"
+                        endpoint=f"tools/device/selectDeviceInverterInfo?deviceGuid={device_guid}"
                     )
 
-                    _LOGGER.debug("Details for inverter GUID %s: %s", deviceGuid, json.dumps(inverter_info))
+                    _LOGGER.debug("Details for inverter GUID %s: %s", device_guid, json.dumps(inverter_info))
                     if inverter_info and "data" in inverter_info:
                         inverter.data = inverter_info["data"]

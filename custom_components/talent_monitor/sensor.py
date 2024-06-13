@@ -10,7 +10,9 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorEntityDescription
 from homeassistant.components.sensor import SensorStateClass
 from homeassistant.const import UnitOfEnergy
+from homeassistant.const import UnitOfTemperature
 from homeassistant.const import UnitOfPower
+from homeassistant.core import callback
 
 from .const import DOMAIN
 
@@ -51,7 +53,6 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         key="lastDataUpdateTime",
         translation_key="talentmonitor_powerstation_last_data_update_time",
-        state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATE,
     ),
     SensorEntityDescription(
@@ -59,6 +60,7 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
         translation_key="talentmonitor_inverter_temp",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS
     ),
 )
 
@@ -116,9 +118,15 @@ class TalentMonitorSensor(SensorEntity):
         """Initialize a TalentMonitor sensor."""
         self._entity = entity
 
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        self.async_write_ha_state()
+
     @property
     def native_value(self):
         """Return the state of the sensor."""
+
         if (self.entity_description.key == "lastDataUpdateTime"):
             return datetime.fromisoformat(self._entity.data[self.entity_description.key])
         else:
@@ -145,8 +153,7 @@ class TalentMonitorSensor(SensorEntity):
             if (value_split and len(value_split) == 2):
                 unit = value_split[1]
                 return SENSOR_UNIT_MAPPING[unit]
-
-        return None
+        return self.entity_description.native_unit_of_measurement
 
 class TalentMonitorPowerStationSensor(TalentMonitorEntity, TalentMonitorSensor):
     """TalentMonitor PowerStation Sensor class."""
@@ -163,7 +170,7 @@ class TalentMonitorPowerStationSensor(TalentMonitorEntity, TalentMonitorSensor):
             power_station,
             sensorEntityDescription.key
         )
-        TalentMonitorSensor.__init__(self,power_station)
+        TalentMonitorSensor.__init__(self, power_station)
 
         self.entity_description = sensorEntityDescription
 
