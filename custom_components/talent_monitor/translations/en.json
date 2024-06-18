@@ -23,7 +23,7 @@
   "entity": {
     "sensor": {
       "talentmonitor_powerstation_total_active_power": {
-        "name": "Current Power"
+        "name": "Active Power"
       },
       "talentmonitor_powerstation_day_energy": {
         "name": "Total Energy Today"
@@ -37,11 +37,32 @@
       "talentmonitor_powerstation_last_data_update_time": {
         "name": "Last Data Update"
       },
-      "talentmonitor_powerstation_rated_power": {
+      "talentmonitor_inverter_rated_power": {
         "name": "Rated Power"
       },
-      "talentmonitor_inverter_temp": {
+      "talentmonitor_inverter_inverter_temp": {
         "name": "Temperature"
+      },
+      "talentmonitor_inverter_phase_active_power": {
+        "name": "Phase {phase_id} Active Power"
+      },
+      "talentmonitor_inverter_phase_current": {
+        "name": "Phase {phase_id} Current"
+      },
+      "talentmonitor_inverter_phase_voltage": {
+        "name": "Phase {phase_id} Voltage"
+      },
+      "talentmonitor_inverter_phase_frequency": {
+        "name": "Phase {phase_id} Frequency"
+      },
+      "talentmonitor_inverter_panel_power": {
+        "name": "Panel {panel_id} Power"
+      },
+      "talentmonitor_inverter_panel_current": {
+        "name": "Panel {panel_id} Current"
+      },
+      "talentmonitor_inverter_panel_voltage": {
+        "name": "Panel {panel_id} Voltage"
       }
     }
   }
