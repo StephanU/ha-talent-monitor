@@ -37,11 +37,32 @@
       "talentmonitor_powerstation_last_data_update_time": {
         "name": "Letzte Datenaktualisierung"
       },
-      "talentmonitor_powerstation_rated_power": {
+      "talentmonitor_inverter_rated_power": {
         "name": "Nennleistung"
       },
-      "talentmonitor_inverter_temp": {
+      "talentmonitor_inverter_inverter_temp": {
         "name": "Temperatur"
+      },
+      "talentmonitor_inverter_phase_active_power": {
+        "name": "Phase {phase_id} Aktuelle Leistung"
+      },
+      "talentmonitor_inverter_phase_current": {
+        "name": "Phase {phase_id} Strom"
+      },
+      "talentmonitor_inverter_phase_voltage": {
+        "name": "Phase {phase_id} Spannung"
+      },
+      "talentmonitor_inverter_phase_frequency": {
+        "name": "Phase {phase_id} Frequenz"
+      },
+      "talentmonitor_inverter_panel_power": {
+        "name": "Panel {panel_id} Leistung"
+      },
+      "talentmonitor_inverter_panel_current": {
+        "name": "Panel {panel_id} Strom"
+      },
+      "talentmonitor_inverter_panel_voltage": {
+        "name": "Panel {panel_id} Spannung"
       }
     }
   }
