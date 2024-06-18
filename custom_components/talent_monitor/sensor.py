@@ -197,6 +197,7 @@ class TalentMonitorSensor(SensorEntity):
 
     @property
     def data(self):
+        """Return the data of this sensor."""
         return self._entity.data
 
     @property
@@ -299,6 +300,7 @@ class TalentMonitorInverterPhaseSensor(
 
     @property
     def data(self):
+        """Return the data of this sensor."""
         return self._entity.data["phase"][self._phase_index]
 
 class TalentMonitorInverterPanelSensor(
@@ -329,4 +331,5 @@ class TalentMonitorInverterPanelSensor(
 
     @property
     def data(self):
+        """Return the data of this sensor."""
         return self._entity.data["pv"][self._panel_index]
