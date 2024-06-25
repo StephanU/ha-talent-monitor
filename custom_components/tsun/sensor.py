@@ -3,13 +3,13 @@
 from datetime import datetime
 import logging
 import re
-from custom_components.talent_monitor.entity import (
+from custom_components.tsun.entity import (
     TalentMonitorEntity,
     TalentMonitorInverterEntity,
 )
-from custom_components.talent_monitor.pyTalentMonitor.data_provider import Entity
-from custom_components.talent_monitor.pyTalentMonitor.inverter import Inverter
-from custom_components.talent_monitor.pyTalentMonitor.power_station import PowerStation
+from custom_components.tsun.pyTalentMonitor.data_provider import Entity
+from custom_components.tsun.pyTalentMonitor.inverter import Inverter
+from custom_components.tsun.pyTalentMonitor.power_station import PowerStation
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorEntityDescription
@@ -27,7 +27,7 @@ from .const import DOMAIN
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
-camel_case_to_snake_case = re.compile(r'(?<!^)(?=[A-Z])')
+camel_case_to_snake_case = re.compile(r"(?<!^)(?=[A-Z])")
 
 SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
@@ -141,7 +141,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
                 for index, pv in enumerate(inverter.data[value]):
                     if index < inverter.data["pvCount"] - 1 and index < len(
                         inverter.data[value]
-                    ): # it seems pvCount is not set correctly as it is set to 3 when there are only 2 panels, subtracting 1 is a solution for now but might result in a problem at some point
+                    ):  # it seems pvCount is not set correctly as it is set to 3 when there are only 2 panels, subtracting 1 is a solution for now but might result in a problem at some point
                         for _, pv_value in enumerate(pv):
                             _LOGGER.debug(
                                 "Iterate pv %d for inverter %s", index, pv_value
@@ -235,6 +235,7 @@ class TalentMonitorSensor(SensorEntity):
                 return SENSOR_UNIT_MAPPING[unit]
         return self.entity_description.native_unit_of_measurement
 
+
 class TalentMonitorPowerStationSensor(TalentMonitorEntity, TalentMonitorSensor):
     """TalentMonitor PowerStation Sensor class."""
 
@@ -251,7 +252,10 @@ class TalentMonitorPowerStationSensor(TalentMonitorEntity, TalentMonitorSensor):
         TalentMonitorSensor.__init__(self, power_station)
 
         self.entity_description = sensorEntityDescription
-        self.translation_key = 'talentmonitor_powerstation_' + camel_case_to_snake_case.sub('_', sensorEntityDescription.key).lower()
+        self.translation_key = (
+            "talentmonitor_powerstation_"
+            + camel_case_to_snake_case.sub("_", sensorEntityDescription.key).lower()
+        )
 
 
 class TalentMonitorInverterSensor(TalentMonitorInverterEntity, TalentMonitorSensor):
@@ -270,7 +274,11 @@ class TalentMonitorInverterSensor(TalentMonitorInverterEntity, TalentMonitorSens
         TalentMonitorSensor.__init__(self, inverter)
 
         self.entity_description = sensorEntityDescription
-        self.translation_key = 'talentmonitor_inverter_' + camel_case_to_snake_case.sub('_', sensorEntityDescription.key).lower()
+        self.translation_key = (
+            "talentmonitor_inverter_"
+            + camel_case_to_snake_case.sub("_", sensorEntityDescription.key).lower()
+        )
+
 
 class TalentMonitorInverterPhaseSensor(
     TalentMonitorInverterEntity, TalentMonitorSensor
@@ -292,16 +300,24 @@ class TalentMonitorInverterPhaseSensor(
             "phase" + str(phase_index) + sensorEntityDescription.key,
         )
         TalentMonitorSensor.__init__(self, inverter)
-        phase_name = inverter.data["acPhaseExpress"].split(",")[phase_index] if "acPhaseExpress" in inverter.data else phase_index
-        self._attr_translation_placeholders = {"phase_id": phase_name }
+        phase_name = (
+            inverter.data["acPhaseExpress"].split(",")[phase_index]
+            if "acPhaseExpress" in inverter.data
+            else phase_index
+        )
+        self._attr_translation_placeholders = {"phase_id": phase_name}
         self.entity_description = sensorEntityDescription
-        self.translation_key = 'talentmonitor_inverter_phase_' + camel_case_to_snake_case.sub('_', sensorEntityDescription.key).lower()
+        self.translation_key = (
+            "talentmonitor_inverter_phase_"
+            + camel_case_to_snake_case.sub("_", sensorEntityDescription.key).lower()
+        )
         self._phase_index = phase_index
 
     @property
     def data(self):
         """Return the data of this sensor."""
         return self._entity.data["phase"][self._phase_index]
+
 
 class TalentMonitorInverterPanelSensor(
     TalentMonitorInverterEntity, TalentMonitorSensor
@@ -326,7 +342,9 @@ class TalentMonitorInverterPanelSensor(
 
         self._attr_translation_placeholders = {"panel_id": panel_index}
         self.entity_description = sensorEntityDescription
-        self.translation_key = 'talentmonitor_inverter_panel_' + sensorEntityDescription.key
+        self.translation_key = (
+            "talentmonitor_inverter_panel_" + sensorEntityDescription.key
+        )
         self._panel_index = panel_index
 
     @property

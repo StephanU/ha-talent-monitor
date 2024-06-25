@@ -5,12 +5,19 @@ import asyncio
 import logging
 
 from aiohttp import ClientSession
-from custom_components.talent_monitor.pyTalentMonitor.inverter import Inverter, InverterDataProvider
-from custom_components.talent_monitor.pyTalentMonitor.data_provider import DataProvider
-from custom_components.talent_monitor.pyTalentMonitor.power_station import PowerStation, PowerStationDataProvider
+from custom_components.tsun.pyTalentMonitor.inverter import (
+    Inverter,
+    InverterDataProvider,
+)
+from custom_components.tsun.pyTalentMonitor.data_provider import DataProvider
+from custom_components.tsun.pyTalentMonitor.power_station import (
+    PowerStation,
+    PowerStationDataProvider,
+)
 
 # Configure logging
 _LOGGER: logging.Logger = logging.getLogger(__name__)
+
 
 class TalentSolarMonitor:
     """TalentSolarMonitor API client."""
@@ -24,8 +31,9 @@ class TalentSolarMonitor:
         """Construct the TalentSolarMonitor API client."""
         self._data_provider = DataProvider(username, password, session)
         self._inverter_data_provider = InverterDataProvider(self._data_provider)
-        self._power_station_data_provider = PowerStationDataProvider(self._data_provider)
-
+        self._power_station_data_provider = PowerStationDataProvider(
+            self._data_provider
+        )
 
     def get_power_stations(self) -> list[PowerStation]:
         """Return the power stations."""
@@ -34,7 +42,6 @@ class TalentSolarMonitor:
     def get_inverters(self) -> list[Inverter]:
         """Return the inverters."""
         return self._inverter_data_provider.inverters
-
 
     async def fetch_data(self):
         """Fetch data from the TalentMonitor."""
@@ -48,6 +55,7 @@ class TalentSolarMonitor:
     async def login(self):
         """Log in to the TalentMonitor API."""
         await self._data_provider.login()
+
 
 async def main(username: str, password: str):
     """Connect to the TalentSolarMonitor API and fetch the solar data."""
