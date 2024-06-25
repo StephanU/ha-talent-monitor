@@ -7,7 +7,7 @@ https://github.com/stephanu/ha_talent_monitor
 import asyncio
 import logging
 
-from custom_components.talent_monitor.coordinator import (
+from custom_components.tsun.coordinator import (
     TalentMonitorDataUpdateCoordinator,
 )
 from homeassistant.config_entries import ConfigEntry
