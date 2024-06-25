@@ -1,11 +1,12 @@
 """TalentMonitorEntity class."""
+
 import logging
 
-from custom_components.talent_monitor.pyTalentMonitor.data_provider import Entity
+from custom_components.tsun.pyTalentMonitor.data_provider import Entity
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from custom_components.talent_monitor.pyTalentMonitor.inverter import Inverter
+from custom_components.tsun.pyTalentMonitor.inverter import Inverter
 
 from .const import DOMAIN
 from .const import NAME
@@ -18,11 +19,9 @@ class TalentMonitorEntity(CoordinatorEntity):
 
     _attr_has_entity_name = True
 
-    def __init__(
-        self, coordinator, entity: Entity, entity_suffix: str = ""
-    ):
+    def __init__(self, coordinator, entity: Entity, entity_suffix: str = ""):
         """Initialize a TalentMonitor entity."""
-        CoordinatorEntity.__init__(self,coordinator)
+        CoordinatorEntity.__init__(self, coordinator)
 
         device_id = f"{entity.entity_id}"
         device_name = entity.name
@@ -37,14 +36,13 @@ class TalentMonitorEntity(CoordinatorEntity):
 
         _LOGGER.debug("Added TalentMonitor entity id='%s'", self.unique_id)
 
+
 class TalentMonitorInverterEntity(CoordinatorEntity):
     """Base Class for TalentMonitor inverter entities."""
 
     _attr_has_entity_name = True
 
-    def __init__(
-        self, coordinator, inverter: Inverter, entity_suffix: str = ""
-    ):
+    def __init__(self, coordinator, inverter: Inverter, entity_suffix: str = ""):
         """Initialize a TalentMonitor inverter entity."""
         super().__init__(coordinator)
 
