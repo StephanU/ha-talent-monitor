@@ -3,7 +3,7 @@
 import logging
 from datetime import timedelta
 
-from custom_components.talent_monitor.pyTalentMonitor import TalentSolarMonitor
+from custom_components.tsun.pyTalentMonitor import TalentSolarMonitor
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_PASSWORD
 from homeassistant.const import CONF_USERNAME
