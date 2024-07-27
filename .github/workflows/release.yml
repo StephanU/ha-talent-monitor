@@ -21,15 +21,15 @@ jobs:
         shell: "bash"
         run: |
           yq -i -o json '.version="${{ github.event.release.tag_name }}"' \
-            "${{ github.workspace }}/custom_components/talent_monitor/manifest.json"
+            "${{ github.workspace }}/custom_components/tsun/manifest.json"
 
       - name: "ZIP the integration directory"
         shell: "bash"
         run: |
-          cd "${{ github.workspace }}/custom_components/talent_monitor"
+          cd "${{ github.workspace }}/custom_components/tsun"
           zip talent_monitor_integration.zip -r ./
 
       - name: "Upload the ZIP file to the release"
         uses: softprops/action-gh-release@v2.0.6
         with:
-          files: ${{ github.workspace }}/custom_components/talent_monitor/talent_monitor_integration.zip
+          files: ${{ github.workspace }}/custom_components/tsun/talent_monitor_integration.zip
