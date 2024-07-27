@@ -22,13 +22,6 @@ class DataProvider:
         self._session = session
         self._token = None
 
-    def get_credentials(self):
-        """Check whether the credentials are set."""
-        if not self._username or not self.password:
-            raise ValueError(
-                "Credentials not provided via command line arguments or environment variables."
-            )
-
     async def login(self):
         """Log in using the given credentials."""
         login_data = {"username": self._username, "password": self._password}
@@ -38,7 +31,7 @@ class DataProvider:
             self._token = response_data["token"]
             _LOGGER.debug("Login successful - received token: %s", self._token)
         else:
-            _LOGGER.error("Login failed. Got status code %s", response.status)
+            _LOGGER.error("Login failed. Token missing in response. Got status code %s", response.status)
             raise AuthenticationError("Authentication failed")
 
     async def refresh_token(self):
