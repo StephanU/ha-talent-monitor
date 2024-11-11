@@ -3,4 +3,4 @@ homeassistant==2024.6.4
 pip>=21.0,<24.3
 ruff==0.6.4
 pytest-asyncio
-pytest-homeassistant-custom-component==0.13.136
+pytest-homeassistant-custom-component==0.13.182
