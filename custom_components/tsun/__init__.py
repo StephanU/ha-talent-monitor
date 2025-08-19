@@ -11,7 +11,7 @@ from custom_components.tsun.coordinator import (
     TalentMonitorDataUpdateCoordinator,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import Config
+from homeassistant.core_config import Config
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
@@ -43,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     for platform in PLATFORMS:
         coordinator.platforms.append(platform)
         hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, platform)
+            hass.config_entries.async_forward_entry_setups(entry, [platform])
         )
 
     entry.add_update_listener(async_reload_entry)
